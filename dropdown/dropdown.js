@@ -1,107 +1,60 @@
-    var $toggle_area = document.querySelector('#toggle_area');
-    var $target_0 = document.querySelector('#target_0');
-    var $target_1 = document.querySelector('#target_1');
-    var $target_2 = document.querySelector('#target_2');
-    var $target_3 = document.querySelector('#target_3');
+    const $toggle_area = document.querySelector('#toggle_area');
+    const $target_0 = document.querySelector('#target_0');
+    const $target_1 = document.querySelector('#target_1');
+    const $target_2 = document.querySelector('#target_2');
+    const $target_3 = document.querySelector('#target_3');
+    const dropdown_menu = document.querySelector('.menu ul');
+    const arrow = document.querySelector('#arrow');
+    const dropdown_list = document.querySelectorAll('.planet');
+
+    const dorpdown_value = [
+      {color:'어두운 회색', type:'달처럼 표면에 작은 구덩이가 많다.', ring:'고리는 없다.', etc:'태양 가까이에 있다.'},
+      {color:'황토색 또는 밝은 노란색', type:'울퉁불퉁하다. 화산과 같이 솟은 곳도 있고 깊은 계곡처럼 보이는 곳도 있다.', ring:'고리는 없다.', etc:'밤하늘에서 밝게 보인다.'},
+      {color:'푸른색', type:'울퉁불퉁하다. 높은 산도 있고 깊은 계곡처럼 보이는 곳도 있다.', ring:'고리는 없다.', etc:'달이 있다. 생명체가 산다.'},
+      {color:'대체로 붉은색', type:'울퉁불퉁하다. 깊은 계곡처럼 보이는 곳도 있다.', ring:'고리는 없다.', etc:'밤하늘에서 붉게 보인다.'},
+      {color:'연한 갈색', type:'여러 개의 가로 줄무늬가 있다.', ring:'희미하지만 고리가 있다.', etc:'다른 행성에 비해 선명한 줄무늬가 있고, 줄무늬 사이에 주황색의 둥근 점 같은 무늬가 있다.'},
+      {color:'연한 황토색 또는 연한 갈색', type:'희미하지만 연한 갈색이나 회색의 가로로 된 줄무늬가 있다.', ring:'가운데에 커다란 고리가 있다.', etc:'줄무늬가 선명하게 구분되지 않는다.'},
+      {color:'청록색', type:'매끈한 표면에 희미한 세로 줄무늬를 볼 수 있다.', ring:'세로 방향으로 여러 개의 희미한 고리가 있다.', etc:'고리가 세워져 있고, 수직으로 기울어져서 비스듬히 누워 있는 모습이다.'},
+      {color:'파란색', type:'연한 가로 줄무늬를 볼 수 있다.', ring:'희미하지만 여러 개의 고리가 있다.', etc:'주위보다 어두운 둥근 점 같은 무늬가 있다.'}
+    ];
+
+    function toggle_arrow() {
+      if (arrow.textContent == "▼") {
+        arrow.textContent = "▲";
+      } else {
+        arrow.textContent = "▼";
+      }
+    };
+
+    
 
     $toggle_area.addEventListener('click', function() {
-      var IsMenuOpen = false;
-      console.log('드롭다운 메뉴 클릭');
-      if (!IsMenuOpen) {
-        IsMenuOpen = true;
-        document.querySelector('ul').style.display = "block";
-      } else {
-        IsMenuOpenn = false;
-        document.querySelector('ul').style.display = "none";
-      }
-      console.log(IsMenuOpen);
+      dropdown_menu.classList.toggle('show');
+      toggle_arrow();
+      console.log("toggle_area click");
+
+      dropdown_list.forEach(function(item) {
+        item.addEventListener('click', function(e) {
+          const listLabel = e.currentTarget.textContent;
+          $toggle_area.innerHTML = listLabel;
+
+          
+
+          const listId = e.currentTarget.getAttribute('id')
+          const convertNum = parseInt(listId.toString().split("_")[1]);
+          $target_0.textContent = dorpdown_value[convertNum].color;
+          $target_1.textContent = dorpdown_value[convertNum].type;
+          $target_2.textContent = dorpdown_value[convertNum].ring;
+          $target_3.textContent = dorpdown_value[convertNum].etc;
+        });
+  
+      });
     });
 
-    document.querySelector('#planet_0').addEventListener('click', function() {
-      //console.log('수성 클릭 :' + $target_0);
-      $toggle_area.innerHTML = '수성';
-      document.querySelector('ul').style.display = "none";
-      IsMenuOpenn = false;
-      document.querySelector('.txt div').style.borderBottom = "3px solid red";
-      $target_0.innerHTML = '수성 텍스트0';
-      $target_1.innerHTML = '수성 텍스트1';
-      $target_2.innerHTML = '수성 텍스트2';
-      $target_3.innerHTML = '수성 텍스트3';
+    $toggle_area.addEventListener('blur', function() {
+      dropdown_menu.classList.remove('show');
+      toggle_arrow();
+      console.log("toggle_area blur");
     });
 
-    document.querySelector('#planet_1').addEventListener('click', function() {
-      $toggle_area.innerHTML = '금성';
-      document.querySelector('ul').style.display = "none";
-      IsMenuOpenn = false;
-      document.querySelector('.txt div').style.borderBottom = "3px solid orange";
-      $target_0.innerHTML = '금성 텍스트0';
-      $target_1.innerHTML = '금성 텍스트1';
-      $target_2.innerHTML = '금성 텍스트2';
-      $target_3.innerHTML = '금성 텍스트3';
-    });
-
-    document.querySelector('#planet_2').addEventListener('click', function() {
-      $toggle_area.innerHTML = '지구';
-      document.querySelector('ul').style.display = "none";
-      IsMenuOpenn = false;
-      document.querySelector('.txt div').style.borderBottom = "3px solid lime";
-      $target_0.innerHTML = '지구 텍스트0';
-      $target_1.innerHTML = '지구 텍스트1';
-      $target_2.innerHTML = '지구 텍스트2';
-      $target_3.innerHTML = '지구 텍스트3';
-    });
-
-    document.querySelector('#planet_3').addEventListener('click', function() {
-      $toggle_area.innerHTML = '화성';
-      document.querySelector('ul').style.display = "none";
-      IsMenuOpenn = false;
-      document.querySelector('.txt div').style.borderBottom = "3px solid green";
-      $target_0.innerHTML = '화성 텍스트0';
-      $target_1.innerHTML = '화성 텍스트1';
-      $target_2.innerHTML = '화성 텍스트2';
-      $target_3.innerHTML = '화성 텍스트3';
-    });
-
-    document.querySelector('#planet_4').addEventListener('click', function() {
-      $toggle_area.innerHTML = '목성';
-      document.querySelector('ul').style.display = "none";
-      IsMenuOpenn = false;
-      document.querySelector('.txt div').style.borderBottom = "3px solid blue";
-      $target_0.innerHTML = '목성 텍스트0';
-      $target_1.innerHTML = '목성 텍스트1';
-      $target_2.innerHTML = '목성 텍스트2';
-      $target_3.innerHTML = '목성 텍스트3';
-    });
-
-    document.querySelector('#planet_5').addEventListener('click', function() {
-      $toggle_area.innerHTML = '토성';
-      document.querySelector('ul').style.display = "none";
-      IsMenuOpenn = false;
-      document.querySelector('.txt div').style.borderBottom = "3px solid pink";
-      $target_0.innerHTML = '토성 텍스트0';
-      $target_1.innerHTML = '토성 텍스트1';
-      $target_2.innerHTML = '토성 텍스트2';
-      $target_3.innerHTML = '토성 텍스트3';
-    });
-
-    document.querySelector('#planet_6').addEventListener('click', function() {
-      $toggle_area.innerHTML = '천왕성';
-      document.querySelector('ul').style.display = "none";
-      IsMenuOpenn = false;
-      document.querySelector('.txt div').style.borderBottom = "3px solid purple";
-      $target_0.innerHTML = '천왕성 텍스트0';
-      $target_1.innerHTML = '천왕성 텍스트1';
-      $target_2.innerHTML = '천왕성 텍스트2';
-      $target_3.innerHTML = '천왕성 텍스트3';
-    });
-
-    document.querySelector('#planet_7').addEventListener('click', function() {
-      $toggle_area.innerHTML = '해왕성';
-      document.querySelector('ul').style.display = "none";
-      IsMenuOpenn = false;
-      document.querySelector('.txt div').style.borderBottom = "3px solid teal";
-      $target_0.innerHTML = '해왕성 텍스트0';
-      $target_1.innerHTML = '해왕성 텍스트1';
-      $target_2.innerHTML = '해왕성 텍스트2';
-      $target_3.innerHTML = '해왕성 텍스트3';
-    });
+    
